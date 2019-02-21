@@ -8,11 +8,11 @@ public class Model {
     }
 
     public Abonent getAbonentFromNotebook(String name) {
-        return notebook.getAbonentByName(name);
+        return notebook.getAbonentByLogin(name);
     }
 
-    public String addAbonentToNotebook(Abonent abonentToAdd) {
+    public String addAbonentToNotebook(Abonent abonentToAdd) throws LoginAlreadyExistsException {
         this.notebook.addAbonent(abonentToAdd);
-        return abonentToAdd.getShortName();
+        return abonentToAdd.getNickName();
     }
 }

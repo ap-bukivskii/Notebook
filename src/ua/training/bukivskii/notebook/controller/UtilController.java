@@ -2,6 +2,7 @@ package ua.training.bukivskii.notebook.controller;
 
 import ua.training.bukivskii.notebook.model.Abonent;
 import ua.training.bukivskii.notebook.model.Groups;
+import ua.training.bukivskii.notebook.model.LoginAlreadyExistsException;
 import ua.training.bukivskii.notebook.model.Model;
 import ua.training.bukivskii.notebook.view.Messages;
 import ua.training.bukivskii.notebook.view.View;
@@ -35,6 +36,22 @@ public class UtilController {
                 abonent.addGroup(gr);
             }
         }
+    }
+    public String addNewAbonent() {
+        Abonent abToAdd = createAbonent();
+        while(true) {
+            try {
+                return model.addAbonentToNotebook(abToAdd);
+            } catch (LoginAlreadyExistsException loginExists) {
+                view.printMessage(String.format(view.unwrapBundled(Messages.LOGIN_EXISTS_ERROR), loginExists.getLogin()));
+                abToAdd = loginExists.getAbonentCaused();
+                changeLogin(abToAdd);
+            }
+        }
+    }
+
+    private void changeLogin(Abonent ab) {
+        ab.setNickName(inputValidString(Messages.NICKNAME,Regexps.nickNameRegexp));
     }
 
     public Abonent createAbonent(){

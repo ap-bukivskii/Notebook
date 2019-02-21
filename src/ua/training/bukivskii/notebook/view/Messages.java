@@ -30,4 +30,5 @@ public interface Messages {
 
     String CREATED = "created";
     String LAST_CHANGED = "last.changed";
+    String LOGIN_EXISTS_ERROR = "login.exists.error";
 }
